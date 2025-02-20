@@ -66,8 +66,8 @@ final class FluidMenuBarExtraStatusItem: NSObject, NSWindowDelegate {
         window.makeKeyAndOrderFront(nil)
     }
 
-    func setImage(_ image: NSImage) {
-        statusItem.button?.image = image
+    func setOpacity(_ opacity: CGFloat) {
+        statusItem.button?.animator().alphaValue = opacity
     }
 
     func windowDidBecomeKey(_ notification: Notification) {

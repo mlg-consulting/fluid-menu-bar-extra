@@ -51,7 +51,7 @@ public final class FluidMenuBarExtra {
         statusItem = FluidMenuBarExtraStatusItem(title: title, systemImage: systemImage, window: window)
     }
 
-    public func setImage(_ image: NSImage) {
-        statusItem.setImage(image)
+    public func setOpacity(_ opacity: CGFloat) {
+        statusItem.setOpacity(opacity)
     }
 }
