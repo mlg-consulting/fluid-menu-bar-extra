@@ -36,19 +36,53 @@ import SwiftUI
 public final class FluidMenuBarExtra {
     private let statusItem: FluidMenuBarExtraStatusItem
 
-    public init(title: String, @ViewBuilder content: @escaping () -> some View) {
+    public init(
+        title: String, 
+        onAppear: (() -> Void)? = nil,
+        onDisappear: (() -> Void)? = nil,
+        @ViewBuilder content: @escaping () -> some View
+    ) {
         let window = FluidMenuBarExtraWindow(title: title, content: content)
-        statusItem = FluidMenuBarExtraStatusItem(title: title, window: window)
+        statusItem = FluidMenuBarExtraStatusItem(
+            title: title, 
+            window: window, 
+            onAppear: onAppear, 
+            onDisappear: onDisappear
+        )
     }
 
-    public init(title: String, image: String, @ViewBuilder content: @escaping () -> some View) {
+    public init(
+        title: String, 
+        image: String, 
+        onAppear: (() -> Void)? = nil,
+        onDisappear: (() -> Void)? = nil,
+        @ViewBuilder content: @escaping () -> some View
+    ) {
         let window = FluidMenuBarExtraWindow(title: title, content: content)
-        statusItem = FluidMenuBarExtraStatusItem(title: title, image: image, window: window)
+        statusItem = FluidMenuBarExtraStatusItem(
+            title: title, 
+            image: image, 
+            window: window, 
+            onAppear: onAppear, 
+            onDisappear: onDisappear
+        )
     }
 
-    public init(title: String, systemImage: String, @ViewBuilder content: @escaping () -> some View) {
+    public init(
+        title: String, 
+        systemImage: String, 
+        onAppear: (() -> Void)? = nil,
+        onDisappear: (() -> Void)? = nil,
+        @ViewBuilder content: @escaping () -> some View
+    ) {
         let window = FluidMenuBarExtraWindow(title: title, content: content)
-        statusItem = FluidMenuBarExtraStatusItem(title: title, systemImage: systemImage, window: window)
+        statusItem = FluidMenuBarExtraStatusItem(
+            title: title, 
+            systemImage: systemImage, 
+            window: window, 
+            onAppear: onAppear, 
+            onDisappear: onDisappear
+        )
     }
 
     public func setOpacity(_ opacity: CGFloat) {

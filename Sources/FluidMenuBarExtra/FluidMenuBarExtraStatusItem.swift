@@ -18,8 +18,13 @@ final class FluidMenuBarExtraStatusItem: NSObject, NSWindowDelegate {
     private var localEventMonitor: EventMonitor?
     private var globalEventMonitor: EventMonitor?
 
-    private init(window: NSWindow) {
+    private var onAppear: (() -> Void)?
+    private var onDisappear: (() -> Void)?
+
+    private init(window: NSWindow, onAppear: (() -> Void)? = nil, onDisappear: (() -> Void)? = nil) {
         self.window = window
+        self.onAppear = onAppear
+        self.onDisappear = onDisappear
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItem.isVisible = true
@@ -64,6 +69,7 @@ final class FluidMenuBarExtraStatusItem: NSObject, NSWindowDelegate {
         // Tells the system to persist the menu bar in full screen mode.
         DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
         window.makeKeyAndOrderFront(nil)
+        onAppear?()
     }
 
     func setOpacity(_ opacity: CGFloat) {
@@ -95,6 +101,7 @@ final class FluidMenuBarExtraStatusItem: NSObject, NSWindowDelegate {
             self?.window.alphaValue = 1
             self?.setButtonHighlighted(to: false)
         }
+        onDisappear?()
     }
 
     private func setButtonHighlighted(to highlight: Bool) {
@@ -134,22 +141,39 @@ final class FluidMenuBarExtraStatusItem: NSObject, NSWindowDelegate {
 }
 
 extension FluidMenuBarExtraStatusItem {
-    convenience init(title: String, window: NSWindow) {
-        self.init(window: window)
+    convenience init(
+        title: String, 
+        window: NSWindow, 
+        onAppear: (() -> Void)? = nil, 
+        onDisappear: (() -> Void)? = nil
+    ) {
+        self.init(window: window, onAppear: onAppear, onDisappear: onDisappear)
 
         statusItem.button?.title = title
         statusItem.button?.setAccessibilityTitle(title)
     }
 
-    convenience init(title: String, image: String, window: NSWindow) {
-        self.init(window: window)
+    convenience init(
+        title: String, 
+        image: String, 
+        window: NSWindow, 
+        onAppear: (() -> Void)? = nil, 
+        onDisappear: (() -> Void)? = nil
+    ) {
+        self.init(window: window, onAppear: onAppear, onDisappear: onDisappear)
 
         statusItem.button?.setAccessibilityTitle(title)
         statusItem.button?.image = NSImage(named: image)
     }
 
-    convenience init(title: String, systemImage: String, window: NSWindow) {
-        self.init(window: window)
+    convenience init(
+        title: String, 
+        systemImage: String, 
+        window: NSWindow, 
+        onAppear: (() -> Void)? = nil, 
+        onDisappear: (() -> Void)? = nil
+    ) {
+        self.init(window: window, onAppear: onAppear, onDisappear: onDisappear)
 
         statusItem.button?.setAccessibilityTitle(title)
         statusItem.button?.image = NSImage(systemSymbolName: systemImage, accessibilityDescription: title)
