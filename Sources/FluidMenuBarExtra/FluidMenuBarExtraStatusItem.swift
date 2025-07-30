@@ -80,6 +80,19 @@ final class FluidMenuBarExtraStatusItem: NSObject, NSWindowDelegate {
         self.didPressStatusBarButton()
     }
 
+    func setTitle(_ title: String) {
+        statusItem.button?.title = title
+        statusItem.button?.setAccessibilityTitle(title)
+    }
+
+    func setImage(_ image: String) {
+        statusItem.button?.image = NSImage(named: image)
+    }
+
+    func removeImage() {
+      statusItem.button?.image = .none
+    }
+
     func setOpacity(_ opacity: CGFloat) {
         statusItem.button?.animator().alphaValue = opacity
     }

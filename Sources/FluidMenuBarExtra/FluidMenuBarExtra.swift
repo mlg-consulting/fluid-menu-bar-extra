@@ -89,6 +89,18 @@ public final class FluidMenuBarExtra {
         )
     }
 
+    public func setTitle(_ title: String) {
+        statusItem.setTitle(title)
+    }
+
+    public func setImage(_ image: String?) {
+      guard let image else {
+        statusItem.removeImage()
+        return
+      }
+      statusItem.setImage(image)
+    }
+
     public func setOpacity(_ opacity: CGFloat) {
         statusItem.setOpacity(opacity)
     }
